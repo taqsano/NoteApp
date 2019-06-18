@@ -60,7 +60,7 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     addDataStore: () => {
-      dispatch({type:'ADD_DATA'})
+      dispatch({type:'TEST_GIT'})
     }
   }
 }
