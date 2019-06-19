@@ -1,38 +1,53 @@
 import React, { Component } from 'react'
-
+import {notedata} from './FireBaseConnect'
+import ListItem from './ListItem';
 export default class NoteList extends Component {
+constructor(props) {
+  super(props);
+  this.state={
+    Mang:[],
+  }
+}
+
+componentWillMount() {
+  notedata.on('value',(notes)=>{ 
+    var arrData= [];
+      notes.forEach(element => {
+        const key = element.key
+        const noteTitle = element.val().noteTitle
+        const noteContent = element.val().noteContent
+        arrData.push({
+          id:key,
+          note:element,
+          noteTitle:noteTitle,
+          noteContent:noteContent
+        })
+        });
+        this.setState({
+          Mang:arrData
+      });
+      
+  })
+}
+  getData =()=>{
+    if(this.state.Mang){
+      console.log(this.state.Mang);
+      return( this.state.Mang.map((value,key)=>{
+        return(<ListItem 
+          key={key}
+          id={key}
+          note={value}
+          noteTitle={value.noteTitle}
+          noteContent={value.noteContent}
+        />)
+      }))
+    }
+  }
     render() {
         return (
             <div className="col">
             <div id="noteLists" role="tablist" aria-multiselectable="true">
-              <div className="card">
-                <div className="card-header" role="tab" id="note">
-                  <h5 className="mb-0">
-                    <a data-toggle="collapse" data-parent="#noteLists" href="#note1" aria-expanded="true" aria-controls="note1">
-                      Ghi chú ngày 17-06-2019
-                    </a>
-                  </h5>
-                </div>
-                <div id="note1" className="collapse in" role="tabpanel" aria-labelledby="note1">
-                  <div className="card-body">
-                    Test
-                  </div>
-                </div>
-              </div>
-              <div className="card">
-                <div className="card-header" role="tab" id="note">
-                  <h5 className="mb-0">
-                    <a data-toggle="collapse" data-parent="#noteLists" href="#note2" aria-expanded="true" aria-controls="note2">
-                      Ghi chú ngày 18-06-2019
-                    </a>
-                  </h5>
-                </div>
-                <div id="note2" className="collapse in" role="tabpanel" aria-labelledby="note2">
-                  <div className="card-body">
-                    Test
-                  </div>
-                </div>
-              </div>
+              {this.getData()}
             </div>
           </div>
         )

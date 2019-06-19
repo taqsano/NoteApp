@@ -2,37 +2,48 @@ import React, { Component } from 'react'
 import Nav from './Nav';
 import NoteList from './NoteList';
 import NoteForm from './NoteForm';
+import { connect } from 'react-redux';
 // import { Provider } from 'react-redux';
-import {notedata} from './FireBaseConnect'
 
-export default class App extends Component {
+ class App extends Component {
   constructor(props) {
     super(props);
     this.state={
+      isEdit:true,
     }
   }
-  addData =(item)=>{
-    notedata.push(item);
+  
+  showForm =()=>{
+    if(this.props.isEdit){
+      return<NoteForm/>
+    }
   }
 
   render() {
-  notedata.once('value').then(function(snapshot){
-    console.log(snapshot.val())
-    });
     return (
-      
       <div>
         <div>
           <Nav />
-          <div className="container-fluid">
+          <div className="container">
             <div className="row">
               <NoteList />
-              <NoteForm getData={(item)=>this.addData(item)}  />
+              {this.showForm()}
             </div>
           </div></div>
       </div>
-    
     )
   }
 }
-
+const mapStateToProps = (state, ownProps) => {
+  return {
+    isEdit: state.isEdit
+  }
+}
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    changeEdit: () => {
+      dispatch({type:"CHANGE_EDIT"})
+    }
+  }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(App)

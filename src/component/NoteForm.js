@@ -22,12 +22,15 @@ class NoteForm extends Component {
     }
 
     addData =(title,content)=>{
-      // var item={};
-      // item.noteTitle=title;
-      // item.noteContent=content;
+      // ket-noi-thong-qua-props
+      var item={};
+      item.noteTitle=title;
+      item.noteContent=content;
       // this.props.getData(item)
-      // alert("Thêm Thành Công")
-      this.props.addDataStore()
+
+      
+      this.props.addDataStore(item)
+      
     }
   
     render() {
@@ -59,8 +62,8 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    addDataStore: () => {
-      dispatch({type:'TEST_GIT'})
+    addDataStore: (getItem) => {
+      dispatch({type:'ADD_DATA',getItem})
     }
   }
 }
