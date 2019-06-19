@@ -2,8 +2,8 @@ import {notedata} from './FireBaseConnect'
 var redux = require('redux');
 
 const noteInitialState = {
-    
-    isEdit:false
+    isEdit:false,
+    editItem:{},
     
 }
 const allReducer = (state = noteInitialState, action) => {
@@ -14,9 +14,15 @@ const allReducer = (state = noteInitialState, action) => {
             return state
         case "CHANGE_EDIT":
             return {...state,isEdit:!state.isEdit}
+        case "GET_DATA":
+            return {...state,editItem:action.editObj}    
         default:
             return state
     }
 }
 var store = redux.createStore(allReducer);
+store.subscribe(()=>{
+    console.log(JSON.stringify(store.getState()));
+    
+})
 export default store

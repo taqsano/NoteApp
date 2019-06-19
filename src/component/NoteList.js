@@ -18,7 +18,6 @@ componentWillMount() {
         const noteContent = element.val().noteContent
         arrData.push({
           id:key,
-          note:element,
           noteTitle:noteTitle,
           noteContent:noteContent
         })
@@ -31,7 +30,7 @@ componentWillMount() {
 }
   getData =()=>{
     if(this.state.Mang){
-      console.log(this.state.Mang);
+      // console.log(this.state.Mang);
       return( this.state.Mang.map((value,key)=>{
         return(<ListItem 
           key={key}

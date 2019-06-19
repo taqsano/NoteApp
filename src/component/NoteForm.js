@@ -8,6 +8,7 @@ class NoteForm extends Component {
         this.state={
             noteTitle:'',
             noteContent:'',
+            editItem:'',
         }
     }
     
@@ -34,6 +35,7 @@ class NoteForm extends Component {
     }
   
     render() {
+        console.log(this.props.editItem);
         
         return (
             <div className="col-4">
@@ -41,11 +43,11 @@ class NoteForm extends Component {
             <form>
             <div className="form-group">
               <label htmlFor="noteTitle">Tiêu đề note</label>
-              <input onChange={(event)=>this.handleChange(event)} type="text" className="form-control" name="noteTitle" id="noteTitle" aria-describedby="helpId" placeholder="Tiêu đề note" />
+              <input defaultValue={this.props.editItem.noteTitle} onChange={(event)=>this.handleChange(event)} type="text" className="form-control" name="noteTitle" id="noteTitle" aria-describedby="helpId" placeholder="" />
             </div>
             <div className="form-group">
               <label htmlFor="noteContent">Nội dung note</label>
-              <textarea onChange={(event)=>this.handleChange(event)} type="text" className="form-control" name="noteContent" id="noteContent" aria-describedby="helpId" placeholder="Nội dung note" />
+              <textarea defaultValue={this.props.editItem.noteContent} onChange={(event)=>this.handleChange(event)} type="text" className="form-control" name="noteContent" id="noteContent" aria-describedby="helpId" placeholder="" />
             </div>
             <button type="reset" onClick={()=>this.addData(this.state.noteTitle,this.state.noteContent)} className="btn btn-warning btn-block">Lưu</button>
             </form>
@@ -56,7 +58,7 @@ class NoteForm extends Component {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    test: state.test
+    editItem: state.editItem
   }
 }
 

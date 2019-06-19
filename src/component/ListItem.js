@@ -5,6 +5,7 @@ class ListItem extends Component {
 
 Editfunc =()=>{
     this.props.changeEdit();
+    this.props.getdata(this.props.note)
 }
 
     render() {
@@ -42,7 +43,11 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     return {
         changeEdit: () => {
             dispatch({type:"CHANGE_EDIT"})
-          }
-    }
+          },
+        getdata: (editObj) => {
+            dispatch({type:"GET_DATA",editObj})
+          },
+
+    }   
 }
 export default connect(mapStateToProps, mapDispatchToProps)(ListItem)
