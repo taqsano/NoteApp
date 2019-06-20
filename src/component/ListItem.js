@@ -6,6 +6,15 @@ class ListItem extends Component {
 Editfunc =()=>{
     this.props.changeEdit();
     this.props.getdata(this.props.note)
+    // if(this.props.addStatus){
+    //     alert("Đang trong quá trình thêm note")
+    // }
+}
+
+deleteData =()=>{
+    this.props.getDeleteData(this.props.note.id);
+    console.log("dl xoa: ",this.props.note.id );
+    
 }
 
     render() {
@@ -21,7 +30,7 @@ Editfunc =()=>{
                         <div className="btn-group float-right mb-2" role="group" >
                             <button className="btn btn-outline-warning waves-effect d-block"
                             onClick={()=>this.Editfunc()} >Sửa</button>
-                            <button className="btn btn-outline-danger waves-effect d-block" >Xoá</button>
+                            <button className="btn btn-outline-danger waves-effect d-block" onClick={()=>this.deleteData()}>Xoá</button>
                         </div>
                     </div>
                     <div id={"id" + this.props.id} className="collapse in" role="tabpanel" aria-labelledby="note1">
@@ -36,7 +45,7 @@ Editfunc =()=>{
 }
 const mapStateToProps = (state, ownProps) => {
     return {
-        // editStatus: state.isEdit
+        addStatus:state.isAdd,
     }
 }
 const mapDispatchToProps = (dispatch, ownProps) => {
@@ -47,7 +56,12 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         getdata: (editObj) => {
             dispatch({type:"GET_DATA",editObj})
           },
-
+        getDeleteData: (deleteId) => {
+            dispatch({type:"DELETE",deleteId})
+          },
+        changeAdd: () => {
+            dispatch({type:"CHANGE_ADD"})
+          },
     }   
 }
 export default connect(mapStateToProps, mapDispatchToProps)(ListItem)

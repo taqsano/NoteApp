@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
+
 class NoteForm extends Component {
 
     constructor(props) {
@@ -9,8 +10,20 @@ class NoteForm extends Component {
             noteTitle:'',
             noteContent:'',
             editItem:'',
+            id:'',
         }
     }
+    
+    componentWillMount() {
+      if(this.props.editItem){
+        this.setState({
+          noteTitle:this.props.editItem.noteTitle,
+          noteContent:this.props.editItem.noteContent,
+          id:this.props.editItem.id
+        });
+      }
+    }
+    
     
     handleChange=(event)=>{
         const name = event.target.name;
@@ -22,34 +35,53 @@ class NoteForm extends Component {
             })
     }
 
-    addData =(title,content)=>{
-      // ket-noi-thong-qua-props
-      var item={};
-      item.noteTitle=title;
-      item.noteContent=content;
-      // this.props.getData(item)
+     addData =(title,content)=>{
 
+      if(this.state.id){//edit
+        this.props.changeEdit();
+        var editObj={};
+        editObj.id = this.state.id;
+        editObj.noteContent = this.state.noteContent;
+        editObj.noteTitle = this.state.noteTitle;
+        this.props.edit(editObj);
+      }
+      else{
+        var item={};
+        item.noteTitle=title;
+        item.noteContent=content;
+        this.props.changeEdit();
+      }
       
+      // this.props.getData(item)
       this.props.addDataStore(item)
+      
+    }
+    title =()=>{
+      if(this.props.addStatus){
+        return(<h3>Thêm mới</h3>)
+      }
+      else{
+        return(<h3>Sửa ghi chú</h3>)
+      }
       
     }
   
     render() {
-        console.log(this.props.editItem);
+        // console.log(this.props.editItem);
         
         return (
-            <div className="col-4">
-            <h3>SỬA NỘI DUNG NOTE</h3>
+            <div className="col-9">
+            {this.title()}
             <form>
             <div className="form-group">
               <label htmlFor="noteTitle">Tiêu đề note</label>
-              <input defaultValue={this.props.editItem.noteTitle} onChange={(event)=>this.handleChange(event)} type="text" className="form-control" name="noteTitle" id="noteTitle" aria-describedby="helpId" placeholder="" />
+              <input defaultValue={this.props.editItem.noteTitle} onChange={(event)=>this.handleChange(event)} type="text" className="form-control" name="noteTitle" id="noteTitle" aria-describedby="helpId" placeholder="" required />
             </div>
             <div className="form-group">
               <label htmlFor="noteContent">Nội dung note</label>
-              <textarea defaultValue={this.props.editItem.noteContent} onChange={(event)=>this.handleChange(event)} type="text" className="form-control" name="noteContent" id="noteContent" aria-describedby="helpId" placeholder="" />
+              <textarea defaultValue={this.props.editItem.noteContent} onChange={(event)=>this.handleChange(event)} type="text" className="form-control" name="noteContent" id="noteContent" aria-describedby="helpId" placeholder="" required />
             </div>
-            <button type="reset" onClick={()=>this.addData(this.state.noteTitle,this.state.noteContent)} className="btn btn-warning btn-block">Lưu</button>
+            <button type="submit" onClick={()=>this.addData(this.state.noteTitle,this.state.noteContent)} className="btn btn-warning btn-block">Lưu</button>
             </form>
           </div>
         )
@@ -58,7 +90,8 @@ class NoteForm extends Component {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    editItem: state.editItem
+    editItem: state.editItem,
+    addStatus:state.isAdd,
   }
 }
 
@@ -66,7 +99,13 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     addDataStore: (getItem) => {
       dispatch({type:'ADD_DATA',getItem})
-    }
+    },
+    changeEdit: () => {
+      dispatch({type:"CHANGE_EDIT"})
+    },
+    edit: (getItem) => {
+      dispatch({type:"EDIT",getItem})
+    },
   }
 }
 

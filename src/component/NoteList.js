@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import {notedata} from './FireBaseConnect'
 import ListItem from './ListItem';
-export default class NoteList extends Component {
+import { connect } from 'react-redux';
+ class NoteList extends Component {
 constructor(props) {
   super(props);
   this.state={
@@ -42,13 +43,29 @@ componentWillMount() {
       }))
     }
   }
+
+ 
     render() {
         return (
             <div className="col">
             <div id="noteLists" role="tablist" aria-multiselectable="true">
               {this.getData()}
             </div>
+            {/* <button className="btn btn-danger btn-block mt-2" onClick={()=>this.add()}>Thêm mới</button> */}
           </div>
         )
     }
 }
+const mapStateToProps = (state, ownProps) => {
+  return {
+    
+  }
+}
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    changeEdit: () => {
+      dispatch({type:"CHANGE_EDIT"})
+    },
+  }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(NoteList)
