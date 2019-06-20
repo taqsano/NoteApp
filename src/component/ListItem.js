@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Alertinfo from './Alertinfo';
 class ListItem extends Component {
 
 
@@ -13,7 +12,6 @@ Editfunc =()=>{
 }
 
 deleteData =()=>{
-
     this.props.getDeleteData(this.props.note.id);
     // console.log("dl xoa: ",this.props.note.id );
     this.props.alert_on("Xoá thành công")
@@ -42,7 +40,6 @@ deleteData =()=>{
                             {this.props.noteContent}
                         </div>
                     </div>
-                    <Alertinfo   pt-10 mr-100/>
                 </div>
             </div>
         );

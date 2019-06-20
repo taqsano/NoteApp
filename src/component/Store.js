@@ -15,8 +15,8 @@ const allReducer = (state = noteInitialState, action) => {
             
             if(action.getItem===undefined ){
                 state.isAdd=false
-                state.alertContent='Không thể thêm note rỗng'
-                state.alertColor='danger'
+                state.alertContent='Note được cập nhập mới'
+                state.alertColor='warning'
             }
             else if(action.getItem.noteTitle===undefined){
                    state.isAdd=false
@@ -46,12 +46,12 @@ const allReducer = (state = noteInitialState, action) => {
                 noteContent: action.getItem.noteContent,
                 noteTitle: action.getItem.noteTitle
             })
-            console.log('cap nhat: ',JSON.stringify(action.getItem));
+            // console.log('cap nhat: ',JSON.stringify(action.getItem));
             return {...state,editItem:{}}
         case "DELETE":
-                console.log('delete store: ',action.deleteId);
+                // console.log('delete store: ',action.deleteId);
                 notedata.child(action.deleteId).remove()
-                console.log('Xoa: ',action.deleteId);
+                // console.log('Xoa: ',action.deleteId);
                 return state
         case "ALERT_ON":
                 return {...state,alertshow:true,alertContent:action.alertContent}               

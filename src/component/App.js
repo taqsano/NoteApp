@@ -27,6 +27,7 @@ import Alertinfo from './Alertinfo';
         <div>
           <Nav />
           <div className="container">
+          <Alertinfo   pt-10 mr-100/>
             <div className="row">
               <NoteList />
               {this.showForm()}

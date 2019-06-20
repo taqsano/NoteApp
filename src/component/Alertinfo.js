@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { AlertList, Alert, AlertContainer } from "react-bs-notifier";
+import {  Alert, AlertContainer } from "react-bs-notifier";
 import { connect } from 'react-redux';
 class Alertinfo extends Component {
 
@@ -8,12 +8,11 @@ class Alertinfo extends Component {
     }
 
     render() {
-        console.log('alert_style: ',this.props.alertColor);
+        // console.log('alert_style: ',this.props.alertColor);
         if (this.props.alertshow === false) return null;
-       
-        
+    
         return (
-            <AlertContainer>
+            <AlertContainer >
                 <Alert type={this.props.alertColor} onDismiss={() => this.handleDismiss()} timeout={600}> {this.props.alertContent}</Alert>
             </AlertContainer>
         );

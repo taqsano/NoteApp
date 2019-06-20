@@ -23,20 +23,18 @@ class NoteForm extends Component {
         });
       }
     }
-    
-    
+  
     handleChange=(event)=>{
         const name = event.target.name;
         const value = event.target.value;
-        console.log("name: "+name)
-        console.log("value: "+value)
+        // console.log("name: "+name)
+        // console.log("value: "+value)
         this.setState({
                 [name]:value
             })
     }
 
      addData =(title,content)=>{
-
       if(this.state.id){//edit
         this.props.changeEdit();
         var editObj={};
@@ -58,8 +56,8 @@ class NoteForm extends Component {
       
       // this.props.getData(item)
       this.props.addDataStore(item)
-      
     }
+
     title =()=>{
       if(this.props.addStatus){
         return(<h3>Thêm mới</h3>)
@@ -67,14 +65,13 @@ class NoteForm extends Component {
       else{
         return(<h3>Sửa ghi chú</h3>)
       }
-      
     }
   
     render() {
         // console.log(this.props.editItem);
         
         return (
-            <div className="col-9">
+            <div className="col-5">
             {this.title()}
             <form>
             <div className="form-group">
