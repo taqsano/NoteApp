@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import Alertinfo from './Alertinfo';
 class ListItem extends Component {
 
 
@@ -12,14 +13,17 @@ Editfunc =()=>{
 }
 
 deleteData =()=>{
+
     this.props.getDeleteData(this.props.note.id);
-    console.log("dl xoa: ",this.props.note.id );
-    
+    // console.log("dl xoa: ",this.props.note.id );
+    this.props.alert_on("Xoá thành công")
+    this.props.alert_style("danger")
 }
 
     render() {
         return (
             <div>
+                
                 <div className="card">
                     <div className="card-header" role="tab" id="note">
                         <h5 className="mb-0 ">
@@ -38,6 +42,7 @@ deleteData =()=>{
                             {this.props.noteContent}
                         </div>
                     </div>
+                    <Alertinfo   pt-10 mr-100/>
                 </div>
             </div>
         );
@@ -62,6 +67,12 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         changeAdd: () => {
             dispatch({type:"CHANGE_ADD"})
           },
+        alert_on : (alertContent) => {
+            dispatch({type:"ALERT_ON",alertContent})
+          }, 
+        alert_style : (alertColor) => {
+            dispatch({type:"ALERT_STYLE",alertColor})
+          }, 
     }   
 }
 export default connect(mapStateToProps, mapDispatchToProps)(ListItem)

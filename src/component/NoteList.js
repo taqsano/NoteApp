@@ -43,8 +43,6 @@ componentWillMount() {
       }))
     }
   }
-
- 
     render() {
         return (
             <div className="col">

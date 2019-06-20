@@ -5,22 +5,28 @@ const noteInitialState = {
     isEdit:false,
     editItem:{},
     isAdd: false,
+    alertshow:false,
+    alertContent:'',
+    alert_style:'',
 }
 const allReducer = (state = noteInitialState, action) => {
     switch (action.type) {
         case "ADD_DATA":
-            console.log('item: ',action.getItem);
-            if(action.getItem===undefined){
+            
+            if(action.getItem===undefined ){
                 state.isAdd=false
-                alert("Sua thanh cong")
+                state.alertContent='Không thể thêm note rỗng'
+                state.alertColor='danger'
             }
             else if(action.getItem.noteTitle===undefined){
                    state.isAdd=false
-                alert("Thiếu tiêu đề note")
+                   state.alertContent='Note thiếu Title'
+                   state.alertColor='danger'
             }
             else if(action.getItem.noteContent===undefined){
                 state.isAdd=false
-                alert("Thiếu tiêu đề note")
+                state.alertContent='Note thiếu Content'
+                state.alertColor='danger'
             }
             else{
                 state.isAdd=false
@@ -46,8 +52,14 @@ const allReducer = (state = noteInitialState, action) => {
                 console.log('delete store: ',action.deleteId);
                 notedata.child(action.deleteId).remove()
                 console.log('Xoa: ',action.deleteId);
-                return state           
-        default:
+                return state
+        case "ALERT_ON":
+                return {...state,alertshow:true,alertContent:action.alertContent}               
+        case "ALERT_OFF":
+                return {...state,alertshow:false,alertContent:action.alertContent}               
+        case "ALERT_STYLE":
+                return {...state,alertColor:action.alertColor}               
+        default:    
             return state
     }
 }

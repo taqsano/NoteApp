@@ -3,6 +3,8 @@ import Nav from './Nav';
 import NoteList from './NoteList';
 import NoteForm from './NoteForm';
 import { connect } from 'react-redux';
+
+import Alertinfo from './Alertinfo';
 // import { Provider } from 'react-redux';
 
  class App extends Component {
